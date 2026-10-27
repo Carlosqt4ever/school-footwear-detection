@@ -1,0 +1,6 @@
+Footwear Valid/Not_Valid Detector
+==================================
+Weights : yolov8s.pt
+Epochs  : 50
+ImgSize : 640
+Classes : ['not_valid', 'valid']

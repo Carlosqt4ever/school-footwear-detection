@@ -1,0 +1,10 @@
+{
+  "valid_classes": [
+    "valid"
+  ],
+  "not_valid_classes": [
+    "not_valid"
+  ],
+  "confidence_threshold": 0.5,
+  "camera_resolution": "1280x720"
+}

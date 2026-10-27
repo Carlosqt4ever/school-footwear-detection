@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="csrf-token" content="{{ session.csrf }}"><title>{% block title %}Footwear Check{% endblock %} · School entry monitoring</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body>
+{% if g.user %}
+<aside class="sidebar"><a class="brand" href="{{ url_for('dashboard') }}"><span class="brand-icon">✓</span> Footwear<span class="brand-light">Check</span></a><p class="nav-label">SCHOOL ENTRY MONITORING</p><nav>{% for endpoint,label,icon in [('dashboard','Overview','◫'),('live','Live detection','◉'),('history','Detection history','≡')] %}<a class="{{ 'active' if request.endpoint == endpoint }}" href="{{ url_for(endpoint) }}"><span>{{ icon }}</span>{{ label }}</a>{% endfor %}{% if g.user.role == 'admin' %}<p class="nav-label">ADMINISTRATION</p><a class="{{ 'active' if request.endpoint == 'settings' }}" href="{{ url_for('settings') }}"><span>⚙</span>Settings</a><a class="{{ 'active' if request.endpoint == 'users' }}" href="{{ url_for('users') }}"><span>♙</span>Team accounts</a>{% endif %}</nav><div class="sidebar-bottom"><span class="local-dot"></span> Runs locally on this laptop<p>Your camera. Your school.</p></div></aside>
+<div class="app-shell"><header class="topbar"><span>School safety, one step at a time.</span><div><a href="{{ url_for('account') }}">{{ g.user.username }} <small>{{ g.user.role }}</small></a><form method="post" action="{{ url_for('logout') }}"><input type="hidden" name="csrf" value="{{ session.csrf }}"><button class="text-button">Sign out</button></form></div></header><main>
+{% else %}<main class="auth-shell">{% endif %}
+{% for category,message in get_flashed_messages(with_categories=true) %}<div role="alert" class="notice {{ category }}">{{ message }}</div>{% endfor %}
+{% block content %}{% endblock %}
+</main>{% if g.user %}</div>{% endif %}
+{% block scripts %}{% endblock %}</body></html>
